@@ -1,6 +1,6 @@
 $(function () {
-    var layer = layui.layer
-    var form = layui.form
+    var layer = layui.layer;
+    var form = layui.form;
     initEditor();
     initCate();
     // 定义加载文章分类的方法
@@ -55,16 +55,18 @@ $(function () {
             .cropper('destroy') // 销毁旧的裁剪区域
             .attr('src', newImgURL) // 重新设置图片路径
             .cropper(options) // 重新初始化裁剪区域
+
     });
     // 发起请求，需要传五个参数
-    var art_state = '发布';
+    var art_state = '已发布';
+    // 点击存为草稿按钮，重新给art_state赋值
     $('#btnSave2').on('click', function () {
+        console.log(11);
         art_state = '草稿'
     });
     // 获取前三个参数和state参数
     $('#form_pub').on('submit', function (e) {
         // 阻止表单的默认行为
-
         e.preventDefault()
         // 获取表单数据
         var fd = new FormData($(this)[0]);
@@ -86,7 +88,8 @@ $(function () {
                 publishArticle(fd)
             })
 
-    })
+    });
+    // 发起`Ajax`请求实现发布文章的功能
     function publishArticle(fd) {
         $.ajax({
             method: 'POST',
@@ -95,12 +98,12 @@ $(function () {
             contentType: false,
             processData: false,
             success: function (res) {
-                console.log(res);
+                // console.log(res);
                 if (res.status !== 0) {
                     return layer.msg('发布文章失败')
                 }
                 layer.msg('发布文章成功')
-                location.href = "art_list.html"
+                // location.href = "art_list.html"
 
             }
         })
